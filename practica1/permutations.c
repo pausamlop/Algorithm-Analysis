@@ -25,6 +25,9 @@
 /* Output:                                         */
 /* int: random number	                           */
 /***************************************************/
+
+/*pruebaaa*/
+
 int random_num(int inf, int sup)
 {
   return (int)((sup - inf + 1) * (double)rand() / (double)RAND_MAX) + inf;
