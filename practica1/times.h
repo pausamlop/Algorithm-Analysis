@@ -1,10 +1,10 @@
- 
+
   /**
  *
  * Description: Header files for time functions
  *
  * File: times.h
- * Author: Javier Sanz-Cruzado, Rocío Cañamares 
+ * Author: Javier Sanz-Cruzado, Rocío Cañamares
  * Version: 1.0
  * Data: 20-09-2019
  *
@@ -20,7 +20,9 @@
   #define OK (!(ERR))
 #endif
 
+#include <time.h>
 #include "sorting.h"
+#include "permutations.h"
 
 /* type definitions */
 typedef struct time {
