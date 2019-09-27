@@ -3,7 +3,7 @@
  * Description: Implementation of functions for permutation generation
  *
  * File: permutations.c
- * Author: Laura e Paz & Paula Samper
+ * Author: Laura de Paz & Paula Samper
  * Version: 1.0
  * Data: 20-09-2019
  *
@@ -16,14 +16,14 @@
 /* Function: random_num Date:  20/09/19            */
 /* Authors: Paula Samper & Laura de Paz            */
 /*                                                 */
-/* Rutine that generates random numbers	  		   */
+/* Rutine that generates random numbers	    		   */
 /* between two given numbers                       */
 /*                                                 */
 /* Input:                                          */
 /* int inf: inferior limit                         */
-/* int sup: superior limit       	               */
+/* int sup: superior limit       	                 */
 /* Output:                                         */
-/* int: random number	                           */
+/* int: random number	                             */
 /***************************************************/
 
 /*pruebaaa*/
@@ -39,12 +39,12 @@ int random_num(int inf, int sup)
 /*                                                 */
 /* Rutine that generates a random permutation      */
 /*                                                 */
-/* Input:                               	       */
+/* Input:                               	         */
 /* int n: Number of permutation elements           */
 /* Output:                                         */
-/* int *: punter to an integer array that 		   */
-/* contains the permutation            			   */
-/* or NULL if error		                           */
+/* int *: punter to an integer array that 		     */
+/* contains the permutation            			       */
+/* or NULL if error		                             */
 /***************************************************/
 void swap ( int *x, int *y ) {
   int aux;
@@ -75,9 +75,9 @@ int* generate_perm(int N)
 
 /***************************************************/
 /* Function: genera_permutaciones Date:            */
-/* Authors:                                        */
+/* Authors: Paula Samper & Laura de Paz            */
 /*                                                 */
-/* Funcion that generates n_perms random		   */
+/* Funcion that generates n_perms random		       */
 /* permutations of N elements                 	   */
 /*                                                 */
 /* Input:                                          */
@@ -85,10 +85,19 @@ int* generate_perm(int N)
 /* int N: Number of elements of each permutation   */
 /* Output:                                         */
 /* int**: Array of integer pointers that point 	   */
-/* to each of the permutations 		               */
-/* NULL if error          		                   */
+/* to each of the permutations 		                 */
+/* NULL if error          		                     */
 /***************************************************/
 int** generate_permutations(int n_perms, int N)
 {
-/* your code */
+  int **perm, i;
+
+  perm = (int **)malloc(n_perms*sizeof(int *));
+  if (!perm) return NULL;
+
+  for (i = 0; i < n_perms; i++){
+    perm[i] = generate_perm(N);
+  }
+
+  return perm;
 }

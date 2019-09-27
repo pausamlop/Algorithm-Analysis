@@ -5,7 +5,7 @@
 /* Programa que Comprueba SelectSort              */
 /*                                                */
 /* Entrada: Linea de comandos                     */
-/* -tamanio: numero elementos permutacion         */
+/* -size: numero elementos permutacion         */
 /* Salida: 0: OK, -1: ERR                         */
 /**************************************************/
 #include <stdlib.h>
@@ -24,18 +24,18 @@ int main(int argc, char** argv)
 
   if (argc != 3) {
     fprintf(stderr, "Error en los parametros de entrada:\n\n");
-    fprintf(stderr, "%s -tamanio <int>\n", argv[0]);
+    fprintf(stderr, "%s -size <int>\n", argv[0]);
     fprintf(stderr, "Donde:\n");
-    fprintf(stderr, " -tamanio : numero elementos permutacion.\n");
+    fprintf(stderr, " -size : numero elementos permutacion.\n");
     return 0;
   }
   printf("Practica numero 1, apartado 4\n");
-  printf("Realizada por: Vuestros nombres\n");
-  printf("Grupo: Vuestro grupo\n");
+  printf("Realizada por: Paula and Laura\n");
+  printf("Grupo: 125\n");
 
   /* comprueba la linea de comandos */
   for(i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "-tamanio") == 0) {
+    if (strcmp(argv[i], "-size") == 0) {
       tamano = atoi(argv[++i]);
     } else {
       fprintf(stderr, "Parametro %s es incorrecto\n", argv[i]);
@@ -50,6 +50,7 @@ int main(int argc, char** argv)
   }
 
   ret = InsertSort(perm, 0, tamano-1);
+  /*ret = InsertSortInv(perm, 0, tamano-1);*/
 
   if (ret == ERR) {
     printf("Error: Error en BubbleSort\n");
@@ -66,4 +67,3 @@ int main(int argc, char** argv)
 
   return 0;
 }
-
