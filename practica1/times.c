@@ -38,16 +38,17 @@ short average_sorting_time(pfunc_sort method,
   for (i = 0; i < n_perms; i++){
     res = method(perms[i],0,N-1);
     if (res == ERR) return ERR;
-    if (res < min) min = res;
+    if (min == 0) min = res;
+    else if (res < min) min = res;
     if (res > max) max = res;
     sum += res;
   }
   end = clock();
 
-  ptime->time = ((double)(end - start) / CLOCKS_PER_SEC) / n_perms;
+  ptime->time = ((double)(end - start) / (double)CLOCKS_PER_SEC) / (double)n_perms;
   ptime->min_ob = min;
   ptime->max_ob = max;
-  ptime->average_ob = sum/n_perms;
+  ptime->average_ob = (double)sum/(double)n_perms;
 
   return OK;
 
@@ -58,11 +59,34 @@ short average_sorting_time(pfunc_sort method,
 /*                                                 */
 /* Your comments		                           */
 /***************************************************/
+
+
 short generate_sorting_times(pfunc_sort method, char* file,
                                 int num_min, int num_max,
                                 int incr, int n_perms)
 {
-  /* your code */
+
+  int i, i_max;
+  short result;
+  PTIME array_times = NULL;
+
+  i_max = (num_max - num_min)/incr + 1;
+  array_times = (PTIME)malloc(i_max*sizeof(TIME));
+
+  if(!array_times) return ERR;
+
+  for (i = 0; i < i_max; i++){
+    result = average_sorting_time(method, n_perms, num_min + incr*i, &array_times[i]);
+    if (result == ERR){
+      free(array_times);
+      return ERR;
+    }
+  }
+
+  store_time_table(file, array_times, i_max);
+
+  free (array_times);
+  return OK;
 }
 
 /***************************************************/
@@ -70,7 +94,22 @@ short generate_sorting_times(pfunc_sort method, char* file,
 /*                                                 */
 /* Your comments		                           */
 /***************************************************/
+
 short store_time_table(char* file, PTIME time, int n_times)
 {
-  /* your code */
+  int i = 0;
+  FILE *f1 = NULL;
+
+  if (!file || !time || n_times<0 ) return ERR;
+
+  f1 = fopen(file, "w");
+  if (!f1) return ERR;
+
+  for (i = 0; i<n_times; i++){
+    fprintf (f1, "%i, %lf, %lf, %i, %i, \n", time[i].N, time[i].time, time[i].average_ob, time[i].max_ob, time[i].min_ob);
+  }
+
+  fclose(f1);
+  return OK;
+
 }

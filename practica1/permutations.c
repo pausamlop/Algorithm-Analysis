@@ -30,7 +30,7 @@
 
 int random_num(int inf, int sup)
 {
-  return (int)((sup - inf + 1) * (double)rand() / (double)RAND_MAX) + inf;
+  return (int)((sup - inf + 1) * (double)rand() / ((double)RAND_MAX + 1)) + inf;
 }
 
 /***************************************************/
@@ -46,8 +46,11 @@ int random_num(int inf, int sup)
 /* contains the permutation            			       */
 /* or NULL if error		                             */
 /***************************************************/
-void swap ( int *x, int *y ) {
+void swap (int *x, int *y) {
   int aux;
+
+  if (!x || !y) return;
+
   aux = *x;
   *x = *y;
   *y = aux;
@@ -58,6 +61,9 @@ int* generate_perm(int N)
 {
   int *perm = NULL;
   int i;
+
+  if (N<0) return NULL;
+
   perm = (int *)malloc(N*sizeof(int));
   if (!perm) return NULL;
 
@@ -91,6 +97,8 @@ int* generate_perm(int N)
 int** generate_permutations(int n_perms, int N)
 {
   int **perm, i;
+
+  if (n_perms < 0 || N < 0) return NULL;
 
   perm = (int **)malloc(n_perms*sizeof(int *));
   if (!perm) return NULL;

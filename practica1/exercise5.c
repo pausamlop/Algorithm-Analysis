@@ -45,8 +45,8 @@ int main(int argc, char** argv)
   }
 
   printf("Practica numero 1, apartado 5\n");
-  printf("Realizada por: Vuestros nombres\n");
-  printf("Grupo: Vuestro grupo\n");
+  printf("Realizada por: Paula Samper and Laura de Paz\n");
+  printf("Grupo: 125\n");
 
   /* comprueba la linea de comandos */
   for(i = 1; i < argc ; i++) {
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
       incr = atoi(argv[++i]);
     } else if (strcmp(argv[i], "-numP") == 0) {
       n_perms = atoi(argv[++i]);
-    } else if (strcmp(argv[i], "-fichSalida") == 0) {
+    } else if (strcmp(argv[i], "-outputFile") == 0) {
       strcpy(nombre, argv[++i]);
     } else {
       fprintf(stderr, "Parametro %s es incorrecto\n", argv[i]);
@@ -75,4 +75,3 @@ int main(int argc, char** argv)
 
   return 0;
 }
-
