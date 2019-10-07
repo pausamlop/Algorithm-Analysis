@@ -86,7 +86,7 @@ short generate_sorting_times(pfunc_sort method, char* file,
   store_time_table(file, array_times, i_max);
 
   free (array_times);
-  return OK
+  return OK;
 }
 
 /***************************************************/
