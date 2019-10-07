@@ -13,6 +13,11 @@
 *.map
 *.exp
 
+#runtime files
+*.log
+*.lock
+*.tmp
+
 # Precompiled Headers
 *.gch
 *.pch
