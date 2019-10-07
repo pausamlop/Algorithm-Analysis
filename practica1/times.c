@@ -86,7 +86,7 @@ short generate_sorting_times(pfunc_sort method, char* file,
   store_time_table(file, array_times, i_max);
 
   free (array_times);
-  return OK;
+  return OK
 }
 
 /***************************************************/
@@ -106,7 +106,7 @@ short store_time_table(char* file, PTIME time, int n_times)
   if (!f1) return ERR;
 
   for (i = 0; i<n_times; i++){
-    fprintf (f1, "%i, %lf, %lf, %i, %i, \n", time[i].N, time[i].time, time[i].average_ob, time[i].max_ob, time[i].min_ob);
+    fprintf (f1, "%i, %f, %f, %i, %i, \n", time[i].N, time[i].time, time[i].average_ob, time[i].max_ob, time[i].min_ob);
   }
 
   fclose(f1);
