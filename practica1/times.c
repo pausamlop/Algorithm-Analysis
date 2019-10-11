@@ -23,7 +23,7 @@ short average_sorting_time(pfunc_sort method,
                               PTIME ptime)
 {
   clock_t start, end;
-  int i, res, min = 0,max = 0,sum = 0;
+  int i, j, res, min = 0,max = 0,sum = 0;
   int **perms = NULL;
 
   if (!method || n_perms < 0 || N < 0 || !ptime) return ERR;
@@ -32,12 +32,17 @@ short average_sorting_time(pfunc_sort method,
   ptime->n_elems = n_perms;
 
   perms = generate_permutations(n_perms,N);
-  if (!perms) return ERR;
+  if (!perms)return ERR;
+
 
   start = clock();
   for (i = 0; i < n_perms; i++){
     res = method(perms[i],0,N-1);
-    if (res == ERR) return ERR;
+    if (res == ERR){
+      for (j=0; j<n_perms; j++) free(perms[j]);
+      free(perms);
+      return ERR;
+    }
     if (min == 0) min = res;
     else if (res < min) min = res;
     if (res > max) max = res;
@@ -50,6 +55,8 @@ short average_sorting_time(pfunc_sort method,
   ptime->max_ob = max;
   ptime->average_ob = (double)sum/(double)n_perms;
 
+  for (j=0; j<n_perms; j++) free(perms[j]);
+  free(perms);
   return OK;
 
 }
