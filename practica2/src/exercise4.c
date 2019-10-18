@@ -49,11 +49,17 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  ret = InsertSort(perm, 0, tamano-1);
+
+  for(j = 0; j < tamano; j++) {
+    printf("%d \t", perm[j]);
+  };
+  printf("\n");
+  ret = MergeSort(perm, 0, tamano-1);
   /*ret = InsertSortInv(perm, 0, tamano-1);*/
 
+  printf("BO = %i\n", ret);
   if (ret == ERR) {
-    printf("Error: Error en BubbleSort\n");
+    printf("Error: Error en MergeSort\n");
     free(perm);
     exit(-1);
   }
