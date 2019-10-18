@@ -23,8 +23,10 @@ short average_sorting_time(pfunc_sort method,
                               PTIME ptime)
 {
   clock_t start, end;
-  int i, j, res, min = 0,max = 0,sum = 0;
+  int i, j, res, min = 0,max = 0;
+  double sum = 0;
   int **perms = NULL;
+
 
   if (!method || n_perms < 0 || N < 0 || !ptime) return ERR;
 
@@ -46,14 +48,14 @@ short average_sorting_time(pfunc_sort method,
     if (min == 0) min = res;
     else if (res < min) min = res;
     if (res > max) max = res;
-    sum += res;
+    sum += (double)res/(double)n_perms;
   }
   end = clock();
 
   ptime->time = ((double)(end - start) / (double)CLOCKS_PER_SEC) / (double)n_perms;
   ptime->min_ob = min;
   ptime->max_ob = max;
-  ptime->average_ob = (double)sum/(double)n_perms;
+  ptime->average_ob = sum;
 
   for (j=0; j<n_perms; j++) free(perms[j]);
   free(perms);
