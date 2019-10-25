@@ -46,7 +46,7 @@ int random_num(int inf, int sup)
 /* contains the permutation            			       */
 /* or NULL if error		                             */
 /***************************************************/
-void swap (int *x, int *y) {
+static void swap (int *x, int *y) {
   int aux;
 
   if (!x || !y) return;

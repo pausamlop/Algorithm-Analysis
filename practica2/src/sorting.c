@@ -20,7 +20,7 @@
 /*************************************************************/
 int InsertSort(int* list, int ip, int iu)
 {
-  int i, j, a, count = 0;
+  int i, j, a, count = 1;
   if (ip < 0 || iu < 0 || ip > iu) return ERR;
 
   for (i = ip; i <= iu; i++){
@@ -31,6 +31,7 @@ int InsertSort(int* list, int ip, int iu)
       count++;
       j--;
     }
+    if(j>=ip) count++;
     list[j+1] = a;
   }
   return count;
@@ -54,6 +55,7 @@ int InsertSortInv(int* list, int ip, int iu)
       count++;
       j--;
     }
+    if(j>=ip) count++;
     list[j+1] = a;
   }
   return count;
@@ -80,12 +82,6 @@ int MergeSort(int* table, int ip, int iu){
   res = merge(table, ip, iu, m);
   if (!res) return ERR;
   return num_bo1 + num_bo2 + res;
-
-  // MergeSort(table, ip, m);
-  // MergeSort(table, m+1, iu);
-  // return merge(table, ip, iu, m);
-
-
 }
 
 
@@ -125,7 +121,6 @@ int merge(int* table, int ip, int iu, int imiddle){
   if (i > imiddle){
     while (j <= iu){
       table_aux[k] = table[j];
-      counter++;
       j++;
       k++;
     }
@@ -135,20 +130,76 @@ int merge(int* table, int ip, int iu, int imiddle){
   else if (j>iu){
     while (i <= imiddle){
       table_aux[k] = table[i];
-      counter++;
       i++;
       k++;
     }
   }
 
-
   for(i = 0; i < k; i++){
-    counter++;
     table[i+ip] = table_aux[i];
   }
 
   free(table_aux);
-
   return counter;
 
+}
+
+
+
+
+
+int quicksort(int *table, int ip, int iu){
+  int m, pos;
+  if (!table || iu < ip) return ERR;
+  if (iu == ip) return OK;
+
+  m = split(table, ip, iu, &pos);
+  if (ip < m-1)
+    quicksort(table, ip, m-1);
+  if (m+1 < iu)
+    quicksort(table, m+1, iu);
+
+  return OK;
+
+}
+
+
+static void swap (int *x, int *y) {
+  int aux;
+
+  if (!x || !y) return;
+
+  aux = *x;
+  *x = *y;
+  *y = aux;
+}
+
+int split (int* table, int ip, int iu, int *pos){
+  int i, k, m;
+
+  if (!table || iu < ip || !pos) return ERR;
+
+  m = median(table, ip, iu, pos);
+  k = table[m];
+
+  swap(&table[ip],&table[iu]);
+  m = ip;
+
+  for (i=ip+1; i<=iu; i++){
+    if (table[i]<k) {
+      m++;
+      swap(&table[i], &table[m]);
+    }
+  }
+  swap(&table[ip],&table[m]);
+
+  return m;
+}
+
+
+int median(int *table, int ip, int iu, int *pos){
+  if (!table || iu < ip || !pos) return ERR;
+
+  *pos = ip;
+  return 0;
 }

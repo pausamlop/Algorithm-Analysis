@@ -66,7 +66,7 @@ int main(int argc, char** argv)
   }
 
   /* calculamos los tiempos */
-  ret = generate_sorting_times(InsertSort, nombre,num_min, num_max,incr, n_perms);
+  ret = generate_sorting_times(MergeSort, nombre,num_min, num_max,incr, n_perms);
   if (ret == ERR) { /* ERR_TIME debera ser un numero negativo */
     printf("Error en la funcion Time_Ordena\n");
     exit(-1);

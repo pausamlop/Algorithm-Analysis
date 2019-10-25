@@ -24,11 +24,14 @@ int InsertSort(int* list, int ip, int iu)
   for (i = ip; i <= iu; i++){
     a = list[i];
     j = i-1;
+
+
     while (j >= ip && list[j] > a){
       list[j+1] = list[j];
       count++;
       j--;
     }
+    if(j>=ip) count++;
     list[j+1] = a;
   }
   return count;
@@ -49,6 +52,7 @@ int InsertSortInv(int* list, int ip, int iu)
       count++;
       j--;
     }
+    if (j>=ip) count++;
     list[j+1] = a;
   }
   return count;
