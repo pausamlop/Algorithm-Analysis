@@ -1,14 +1,13 @@
 /********************************************************/
-/* Programa: ejercicio2      Fecha:                     */
-/* Autores:                                             */
+/* Program: exeercise2      Date:                       */
+/* Authors: Paula Samper & Laura de Paz                 */
 /*                                                      */
-/* Programa que genera permutaciones                    */
-/* aleatorias                                           */
+/* Program that generates random permutations           */
 /*                                                      */
-/* Entrada: Linea de comandos                           */
-/* -size: numero elementos permutacion               */
-/* -numP: numero de permutaciones                       */
-/* Salida: 0: OK, -1: ERR                               */
+/* Input: Command line                                  */
+/* -size: nomber of elements in each permutation        */
+/* -numP: numero of permutations                        */
+/* Output: 0: OK, -1: ERR                               */
 /********************************************************/
 
 #include <stdlib.h>
@@ -26,41 +25,41 @@ int main(int argc, char** argv)
   srand(time(NULL));
 
   if (argc != 5) {
-    fprintf(stderr, "Error en los parametros de entrada:\n\n");
+    fprintf(stderr, "Error in input parameters:\n\n");
     fprintf(stderr, "%s -size <int> -numP <int>\n", argv[0]);
-    fprintf(stderr, "Donde:\n");
-    fprintf(stderr, " -size : numero elementos de la permutacion.\n");
-    fprintf(stderr, " -numP : numero de permutaciones.\n");
+    fprintf(stderr, "Where:\n");
+    fprintf(stderr, " -size : number of elements in each permutation.\n");
+    fprintf(stderr, " -numP : number of permutations.\n");
     exit(-1);
   }
 
-  printf("Practica numero 1, apartado 2\n");
-  printf("Realizada por: Paula Samper & Laura de Paz\n");
-  printf("Grupo: 125\n");
+  printf("Practice number 1, section 2\n");
+  printf("Done by: your names\n");
+  printf("Group: Your group\n");
 
-  /* comprueba la linea de comandos */
+  /* check command line */
   for(i = 1; i < argc; i++) {
     if (strcmp(argv[i], "-size") == 0) {
       size = atoi(argv[++i]);
     } else if (strcmp(argv[i], "-numP") == 0) {
       num = atoi(argv[++i]);
     } else {
-      fprintf(stderr, "Parametro %s es incorrecto\n", argv[i]);
+      fprintf(stderr, "Wrong paramenter %s\n", argv[i]);
     }
   }
 
-  /* imprimimos el resultado */
+  /* print result */
   for(j = 0; j < num; j++) {
     perm = generate_perm(size);
     if (perm == NULL) { /* error */
-      printf("Error: No hay memoria\n");
+      printf("Error: Out of memory\n");
       exit(-1);
     } else {
-      for(k = 0; k < size; k++) { /* imprimimos cada elemento */
+      for(k = 0; k < size; k++) { /* print each element */
         printf("%d ", perm[k]);
       }
       printf("\n");
-      free(perm); /* liberamos la permutacion */
+      free(perm); /* free permutations */
     }
   }
 

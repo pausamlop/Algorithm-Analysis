@@ -1,19 +1,19 @@
 /***********************************************************/
-/* Programa: ejercicio5                  Fecha:            */
-/* Autores:                                                */
+/* Program: exercise5                  Date:               */
+/* Authors:   Paula Samper & Laura de Paz                  */
 /*                                                         */
-/* Programa que escribe en un fichero                      */
-/* los tiempos medios del algoritmo de                     */
-/* ordenacion por Seleccion                                */
+/* Program that writes in a file                           */
+/* the average times of the algorithm                      */
+/* of sorting by selection                                 */
 /*                                                         */
-/* Entrada: Linea de comandos                              */
-/* -num_min: numero minimo de elementos de la tabla        */
-/* -num_max: numero minimo de elementos de la tabla        */
-/* -incr: incremento\n                                     */
-/* -numP: Introduce el numero de permutaciones a promediar */
-/* -fichSalida: Nombre del fichero de salida               */
-/* Salida: 0 si hubo error                                 */
-/* -1 en caso contrario                                    */
+/* Input: Command Line                                     */
+/* -num_min: lowest number of table elements               */
+/* -num_max: highest number of table elements              */
+/* -incr: increment                                        */
+/* -numP: number of permutations to average                */
+/* -outputFile: Output file name                           */
+/* Output: 0 in case of error                              */
+/* -1 otherwise                                            */
 /***********************************************************/
 
 #include <stdlib.h>
@@ -26,29 +26,29 @@
 int main(int argc, char** argv)
 {
   int i, num_min, num_max, incr, n_perms;
-  char nombre[256];
+  char name[256];
   short ret;
 
   srand(time(NULL));
 
   if (argc != 11) {
-    fprintf(stderr, "Error en los parametros de entrada:\n\n");
+    fprintf(stderr, "Error in input parameters:\n\n");
     fprintf(stderr, "%s -num_min <int> -num_max <int> -incr <int>\n", argv[0]);
-    fprintf(stderr, "\t\t -numP <int> -fichSalida <string> \n");
-    fprintf(stderr, "Donde:\n");
-    fprintf(stderr, "-num_min: numero minimo de elementos de la tabla\n");
-    fprintf(stderr, "-num_max: numero minimo de elementos de la tabla\n");
-    fprintf(stderr, "-incr: incremento\n");
-    fprintf(stderr, "-numP: Introduce el numero de permutaciones a promediar\n");
-    fprintf(stderr, "-fichSalida: Nombre del fichero de salida\n");
+    fprintf(stderr, "\t\t -numP <int> -outputFile <string> \n");
+    fprintf(stderr, "Where:\n");
+    fprintf(stderr, "-num_min: lowest number of table elements\n");
+    fprintf(stderr, "-num_max: highest number of table elements\n");
+    fprintf(stderr, "-incr: increment\n");
+    fprintf(stderr, "-numP: number of permutations to average\n");
+    fprintf(stderr, "-outputFile: Output file name\n");
     exit(-1);
   }
 
-  printf("Practica numero 1, apartado 5\n");
-  printf("Realizada por: Paula Samper and Laura de Paz\n");
-  printf("Grupo: 125\n");
+  printf("Practice number 1, section 5\n");
+  printf("Done by: your names\n");
+  printf("Group: Your group\n");
 
-  /* comprueba la linea de comandos */
+  /* check command line */
   for(i = 1; i < argc ; i++) {
     if (strcmp(argv[i], "-num_min") == 0) {
       num_min = atoi(argv[++i]);
@@ -59,19 +59,19 @@ int main(int argc, char** argv)
     } else if (strcmp(argv[i], "-numP") == 0) {
       n_perms = atoi(argv[++i]);
     } else if (strcmp(argv[i], "-outputFile") == 0) {
-      strcpy(nombre, argv[++i]);
+      strcpy(name, argv[++i]);
     } else {
-      fprintf(stderr, "Parametro %s es incorrecto\n", argv[i]);
+      fprintf(stderr, "Wrong paramenter %s\n", argv[i]);
     }
   }
 
-  /* calculamos los tiempos */
-  ret = generate_sorting_times(MergeSort, nombre,num_min, num_max,incr, n_perms);
-  if (ret == ERR) { /* ERR_TIME debera ser un numero negativo */
-    printf("Error en la funcion Time_Ordena\n");
+  /* compute times */
+  ret = generate_sorting_times(MergeSort, name,num_min, num_max,incr, n_perms);
+  if (ret == ERR) { /* ERR_TIME should be a negative number */
+    printf("Error in function generate_sorting_times\n");
     exit(-1);
   }
-  printf("Salida correcta \n");
+  printf("Correct output \n");
 
   return 0;
 }

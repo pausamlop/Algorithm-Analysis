@@ -1,14 +1,14 @@
 /***********************************************/
-/* Programa: ejercicio1     Date:             */
-/* Authors: Laura e Paz & Paula Samper                                    */
+/* Program: exercise1     Date:                */
+/* Authors: Paula Samper & Laura de Paz        */
 /*                                             */
-/* Program that generates random numbers	   */
+/* Program that generates two random nunmbers  */
 /* between two given numbers                   */
 /*                                             */
-/* Input: Command line                 		   */
-/* -infLim: inferior limit                     */
-/* -supLim: superior limit                     */
-/* -numN: amount of numbers	                   */
+/* Input: Command Line                         */
+/* -limInf: lower limit                        */
+/* -limSup: upper limit                        */
+/* -numN: ammount of numbers                   */
 /* Output: 0: OK, -1: ERR                      */
 /***********************************************/
 
@@ -26,28 +26,28 @@ int main(int argc, char** argv)
   srand(time(NULL));
 
   if (argc != 7) {
-    fprintf(stderr, "Error in the input parameters:\n\n");
-    fprintf(stderr, "%s -infLim <int> -supLim <int> -numN <int>\n", argv[0]);
+    fprintf(stderr, "Input parameter error:\n\n");
+    fprintf(stderr, "%s -limInf <int> -limSup <int> -numN <int>\n", argv[0]);
     fprintf(stderr, "Where:\n");
-    fprintf(stderr, " -infLim: inferior limit.\n");
-    fprintf(stderr, " -supLim: superior limit.\n");
-    fprintf(stderr, " -numN: amount of numbers to generate.\n");
+    fprintf(stderr, " -limInf : Lower limit.\n");
+    fprintf(stderr, " -limSup : Upper limit.\n");
+    fprintf(stderr, " -numN : ammout of mumbers to generate.\n");
     exit(-1);
   }
-  printf("Assigment number 1, part 1\n");
-  printf("Made by: Paula Samper & Laura de Paz\n");
-  printf("Group: 125\n");
+  printf("Practice no 1, Section 1\n");
+  printf("Done by: Your names\n");
+  printf("Grupo: Your group\n");
 
-  /* check command line*/
+  /* check command line */
   for(i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "-infLim") == 0) {
+    if (strcmp(argv[i], "-limInf") == 0) {
       inf = atoi(argv[++i]);
-    } else if (strcmp(argv[i], "-supLim") == 0) {
+    } else if (strcmp(argv[i], "-limSup") == 0) {
       sup = atoi(argv[++i]);
     } else if (strcmp(argv[i], "-numN") == 0) {
       num = atoi(argv[++i]);
     } else {
-      fprintf(stderr, "Parameter %s is incorrect\n", argv[i]);
+      fprintf(stderr, "Wrong Parameter %s \n", argv[i]);
     }
   }
 
