@@ -3,7 +3,7 @@
  * Description: Header files for permutation generation
  *
  * File: permutations.h
- * Author: Javier Sanz-Cruzado, Rocío Cañamares
+ * Author: Laura de Paz & Paula Samper
  * Version: 1.0
  * Data: 20-09-2019
  *

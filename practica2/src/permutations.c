@@ -30,6 +30,7 @@
 
 int random_num(int inf, int sup)
 {
+  if (inf>sup) return ERR;
   return (int)((sup - inf + 1) * (double)rand() / ((double)RAND_MAX + 1)) + inf;
 }
 
@@ -98,13 +99,14 @@ int** generate_permutations(int n_perms, int N)
 {
   int **perm, i;
 
-  if (n_perms < 0 || N < 0) return NULL;
+  if (n_perms <= 0 || N <= 0) return NULL;
 
   perm = (int **)malloc(n_perms*sizeof(int *));
   if (!perm) return NULL;
 
   for (i = 0; i < n_perms; i++){
     perm[i] = generate_perm(N);
+    if (!perm[i]) return NULL; //eliminar perm??
   }
 
   return perm;

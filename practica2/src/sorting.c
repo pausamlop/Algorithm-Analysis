@@ -21,7 +21,7 @@
 int InsertSort(int* list, int ip, int iu)
 {
   int i, j, a, count = 1;
-  if (ip < 0 || iu < 0 || ip > iu) return ERR;
+  if (ip < 0 || iu < 0 || ip > iu || list == NULL) return ERR;
 
   for (i = ip; i <= iu; i++){
     a = list[i];
@@ -45,7 +45,7 @@ int InsertSort(int* list, int ip, int iu)
 int InsertSortInv(int* list, int ip, int iu)
 {
   int i, j, a, count = 0;
-  if (ip < 0 || iu < 0 || ip > iu) return ERR;
+  if (ip < 0 || iu < 0 || ip > iu || list == NULL) return ERR;
 
   for (i = ip; i <= iu; i++){
     a = list[i];
@@ -72,7 +72,7 @@ int InsertSortInv(int* list, int ip, int iu)
 int merge(int* table, int ip, int iu, int imiddle){
   int i, j, k, counter = 0;
   int *table_aux = NULL;
-  if (!table || iu < ip) return ERR;
+  if (!table || iu < ip || ip < 0) return ERR;
 
   /*creates temporary array*/
   table_aux = (int*)malloc((iu-ip+1)*sizeof(int));
@@ -129,7 +129,7 @@ int merge(int* table, int ip, int iu, int imiddle){
 /*************************************************************/
 int MergeSort(int* table, int ip, int iu){
   int m, num_bo1, num_bo2, res;
-  if (!table || iu < ip) return ERR;
+  if (!table || iu < ip || ip < 0) return ERR;
 
   if (ip == iu) return OK;
 
@@ -166,10 +166,53 @@ static void swap (int *x, int *y) {
 /* This function returns the index of the pivot              */
 /*************************************************************/
 int median(int *table, int ip, int iu, int *pos){
-  if (!table || iu < ip || !pos) return ERR;
+  if (!table || iu < ip || ip < 0 || !pos) return ERR;
 
   *pos = ip;
   return 0;
+}
+
+/*************************************************************/
+/* Function: median_avg    Date:  08-11-2019                     */
+/* This function returns the index of the pivot              */
+/*************************************************************/
+int median_avg(int *table, int ip, int iu, int *pos){
+  if (!table || iu < ip || ip < 0 || !pos) return ERR;
+
+  *pos = (ip + iu)/2;
+  return 0;
+}
+
+/*************************************************************/
+/* Function: median_stat   Date:  08-11-2019                     */
+/* This function returns the index of the pivot              */
+/*************************************************************/
+int median_stat(int *table, int ip, int iu, int *pos){
+  if (!table || iu < ip || ip < 0 || !pos) return ERR;
+  int a, b, c;
+  a = table[ip];
+  b = table[iu];
+  c = table[(ip+ iu)/2];
+
+  if (a>b){
+    if (b>c){
+      *pos = b;
+    } else if (a>c) {
+      *pos = c;
+    } else {
+      *pos = a;
+    }
+  } else {
+    if (a>c){
+      *pos = a;
+    } else if (b>c){
+      *pos = c;
+    } else{
+      *pos = b;
+    }
+  }
+  return 3;
+
 }
 
 /*********************************************************************************/
@@ -177,24 +220,29 @@ int median(int *table, int ip, int iu, int *pos){
 /* This function divides an integer array in two subtables depending on a pivot  */
 /*********************************************************************************/
 int split (int* table, int ip, int iu, int *pos){
-  int i, pivot, small;
+  int i, k, pivot, count = 0;
 
-  if (!table || iu < ip || !pos) return ERR;
+  if (!table || iu < ip || !pos || ip < 0) return ERR;
 
   pivot = median(table, ip, iu, pos);
+  if (pivot == ERR) return ERR;
 
-  swap(&table[ip],&table[iu]);
-  small = ip;
+  k = table[*pos];
+  count += pivot;
+
+  swap(&table[ip], &table[*pos]);
+  (*pos) = ip;
 
   for (i=ip+1; i<=iu; i++){
-    small++;
-    if (table[i]< *pos) {
-      swap(&table[i], &table[small]);
+    count++;
+    if (table[i]< k) {
+      (*pos)++;
+      swap(&table[i], &table[*pos]);
     }
   }
-  swap(&table[ip],&table[small]);
+  swap(&table[ip],&table[*pos]);
 
-  return small;
+  return count;
 }
 
 
@@ -204,7 +252,7 @@ int split (int* table, int ip, int iu, int *pos){
 /*************************************************************/
 int QuickSort(int *table, int ip, int iu){
   int count, pos;
-  if (!table || iu < ip) return ERR;
+  if (!table || iu < ip || ip < 0) return ERR;
   if (iu == ip) return OK;
 
   count = split(table, ip, iu, &pos);

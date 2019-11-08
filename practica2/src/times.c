@@ -79,6 +79,8 @@ short generate_sorting_times(pfunc_sort method, char* file,
   short result;
   PTIME array_times = NULL;
 
+  if (!method || !file || num_min>num_max || num_min<0 || incr<=0 ||n_perms<=0) return ERR;
+
   i_max = (num_max - num_min)/incr + 1;
   array_times = (PTIME)malloc(i_max*sizeof(TIME));
 
