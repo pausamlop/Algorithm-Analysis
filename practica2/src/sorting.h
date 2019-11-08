@@ -26,12 +26,11 @@ typedef int (* pfunc_sort)(int*, int, int);
 
 int InsertSort(int* tabla, int ip, int iu);
 int InsertSortInv(int* tabla, int ip, int iu);
-int table_copy(int *t1, int* t2, int ip, int iu);
 int MergeSort(int* table, int ip, int iu);
-int merge(int* table, int ip, int iu, int imiddle);
-int quicksort(int *table, int ip, int iu);
-int split (int* table, int ip, int iu, int *pos);
-int median(int *table, int ip, int iu, int *pos);
+/* int merge(int* table, int ip, int iu, int imiddle); */
+int QuickSort(int *table, int ip, int iu);
+/* int split (int* table, int ip, int iu, int *pos);
+int median(int *table, int ip, int iu, int *pos); */
 
 
 #endif

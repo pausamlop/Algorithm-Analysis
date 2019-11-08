@@ -63,33 +63,12 @@ int InsertSortInv(int* list, int ip, int iu)
 
 
 
+/************************** MERGESORT ***************************/
 
-/*************************************************************/
-/* Function: MergeSort    Date:  18-10-2019                  */
-/* This function sortes an integer array in ascending order  */
-/*************************************************************/
-int MergeSort(int* table, int ip, int iu){
-  int m, num_bo1, num_bo2, res;
-  if (!table || iu < ip) return ERR;
-
-  if (ip == iu) return OK;
-
-  m = (ip + iu)/2;
-  num_bo1 = MergeSort(table, ip, m);
-  num_bo2 = MergeSort(table, m+1, iu);
-  if (num_bo1 == ERR || num_bo2 == ERR) return ERR;
-
-  res = merge(table, ip, iu, m);
-  if (!res) return ERR;
-  return num_bo1 + num_bo2 + res;
-}
-
-
-
-/*************************************************************/
-/* Function: merge    Date:  18-10-2019                 */
-/* - */
-/*************************************************************/
+/**********************************************************************************/
+/* Function: merge    Date:  18-10-2019                                           */
+/* This function combines the table that receives and which is divided by imiddle */
+/**********************************************************************************/
 int merge(int* table, int ip, int iu, int imiddle){
   int i, j, k, counter = 0;
   int *table_aux = NULL;
@@ -144,26 +123,34 @@ int merge(int* table, int ip, int iu, int imiddle){
 
 }
 
-
-
-
-
-int quicksort(int *table, int ip, int iu){
-  int m, pos;
+/*************************************************************/
+/* Function: MergeSort    Date:  18-10-2019                  */
+/* This function sortes an integer array in ascending order  */
+/*************************************************************/
+int MergeSort(int* table, int ip, int iu){
+  int m, num_bo1, num_bo2, res;
   if (!table || iu < ip) return ERR;
-  if (iu == ip) return OK;
 
-  m = split(table, ip, iu, &pos);
-  if (ip < m-1)
-    quicksort(table, ip, m-1);
-  if (m+1 < iu)
-    quicksort(table, m+1, iu);
+  if (ip == iu) return OK;
 
-  return OK;
+  m = (ip + iu)/2;
+  num_bo1 = MergeSort(table, ip, m);
+  num_bo2 = MergeSort(table, m+1, iu);
+  if (num_bo1 == ERR || num_bo2 == ERR) return ERR;
 
+  res = merge(table, ip, iu, m);
+  if (!res) return ERR;
+  return num_bo1 + num_bo2 + res;
 }
 
 
+
+/************************** QUICKSORT ***************************/
+
+/***************************************************************/
+/* Function: swap    Date:  25-10-2019                         */
+/* This function exchanges the value of x with the value of y  */
+/***************************************************************/
 static void swap (int *x, int *y) {
   int aux;
 
@@ -174,32 +161,62 @@ static void swap (int *x, int *y) {
   *y = aux;
 }
 
-int split (int* table, int ip, int iu, int *pos){
-  int i, k, m;
-
-  if (!table || iu < ip || !pos) return ERR;
-
-  m = median(table, ip, iu, pos);
-  k = table[m];
-
-  swap(&table[ip],&table[iu]);
-  m = ip;
-
-  for (i=ip+1; i<=iu; i++){
-    if (table[i]<k) {
-      m++;
-      swap(&table[i], &table[m]);
-    }
-  }
-  swap(&table[ip],&table[m]);
-
-  return m;
-}
-
-
+/*************************************************************/
+/* Function: median    Date:  25-10-2019                     */
+/* This function returns the index of the pivot              */
+/*************************************************************/
 int median(int *table, int ip, int iu, int *pos){
   if (!table || iu < ip || !pos) return ERR;
 
   *pos = ip;
   return 0;
 }
+
+/*********************************************************************************/
+/* Function: split    Date:  25-10-2019                                          */
+/* This function divides an integer array in two subtables depending on a pivot  */
+/*********************************************************************************/
+int split (int* table, int ip, int iu, int *pos){
+  int i, pivot, small;
+
+  if (!table || iu < ip || !pos) return ERR;
+
+  pivot = median(table, ip, iu, pos);
+
+  swap(&table[ip],&table[iu]);
+  small = ip;
+
+  for (i=ip+1; i<=iu; i++){
+    small++;
+    if (table[i]< *pos) {
+      swap(&table[i], &table[small]);
+    }
+  }
+  swap(&table[ip],&table[small]);
+
+  return small;
+}
+
+
+/*************************************************************/
+/* Function: QuickSort    Date:  25-10-2019                  */
+/* This function sortes an integer array in ascending order  */
+/*************************************************************/
+int QuickSort(int *table, int ip, int iu){
+  int count, pos;
+  if (!table || iu < ip) return ERR;
+  if (iu == ip) return OK;
+
+  count = split(table, ip, iu, &pos);
+  if (ip < pos-1)
+    QuickSort(table, ip, pos-1);
+  if (pos+1 < iu)
+    QuickSort(table, pos+1, iu);
+
+  return count;
+
+}
+
+
+/* https://stackoverflow.com/questions/42710726/counting-basic-operations-in-quicksort-algorithm
+   https://stackoverflow.com/questions/53025415/counting-swaps-in-quicksort-in-c                  */
