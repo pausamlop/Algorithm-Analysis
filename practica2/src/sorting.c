@@ -168,7 +168,7 @@ static void swap (int *x, int *y) {
 int median(int *table, int ip, int iu, int *pos){
   if (!table || iu < ip || ip < 0 || !pos) return ERR;
 
-  *pos = ip;
+  *(pos) = ip;
   return 0;
 }
 
@@ -179,7 +179,7 @@ int median(int *table, int ip, int iu, int *pos){
 int median_avg(int *table, int ip, int iu, int *pos){
   if (!table || iu < ip || ip < 0 || !pos) return ERR;
 
-  *pos = (ip + iu)/2;
+  *(pos) = (ip + iu)/2;
   return 0;
 }
 
@@ -188,30 +188,36 @@ int median_avg(int *table, int ip, int iu, int *pos){
 /* This function returns the index of the pivot              */
 /*************************************************************/
 int median_stat(int *table, int ip, int iu, int *pos){
-  int a, b, c;
+  int a, b, c, med, m;
   if (!table || iu < ip || ip < 0 || !pos) return ERR;
 
   a = table[ip];
   b = table[iu];
-  c = table[(ip+ iu)/2];
+  m = (ip + iu)/2;
+  c = table[m];
 
   if (a>b){
     if (b>c){
-      *pos = b;
+      med = b;
     } else if (a>c) {
-      *pos = c;
+      med = c;
     } else {
-      *pos = a;
+      med = a;
     }
   } else {
     if (a>c){
-      *pos = a;
+      med = a;
     } else if (b>c){
-      *pos = c;
+      med = c;
     } else{
-      *pos = b;
+      med = b;
     }
   }
+
+  if (med == a) *(pos) = ip;
+  else if (med == b) *(pos) = iu;
+  else *(pos) = m;
+
   return 3;
 
 }
@@ -258,14 +264,16 @@ int QuickSort(int *table, int ip, int iu){
 
   count = split(table, ip, iu, &pos);
   if (count == ERR)return ERR;
-  if (ip < pos-1)
+  if (ip < pos-1){
     res = QuickSort(table, ip, pos-1);
     if (res == ERR) return ERR;
     count += res;
-  if (pos+1 < iu)
+  }
+  if (pos+1 < iu){
     res = QuickSort(table, pos+1, iu);
     if (res == ERR) return ERR;
     count += res;
+  }
 
   return count;
 

@@ -4,7 +4,7 @@
 #-----------------------
 
 CC = gcc -ansi -pedantic
-CFLAGS = -Wall
+CFLAGS = -Wall -g
 EXE = exercise1 exercise2 exercise3 exercise4 exercise5
 
 all : $(EXE)
@@ -59,4 +59,4 @@ exercise4_test:
 
 exercise5_test:
 	@echo Running exercise5
-	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
+	@./exercise5 -num_min 10 -num_max 100 -incr 5 -numP 10000 -outputFile test.log
