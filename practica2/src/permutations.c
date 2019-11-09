@@ -97,7 +97,7 @@ int* generate_perm(int N)
 /***************************************************/
 int** generate_permutations(int n_perms, int N)
 {
-  int **perm, i;
+  int **perm, i, j;
 
   if (n_perms <= 0 || N <= 0) return NULL;
 
@@ -106,7 +106,11 @@ int** generate_permutations(int n_perms, int N)
 
   for (i = 0; i < n_perms; i++){
     perm[i] = generate_perm(N);
-    if (!perm[i]) return NULL; //eliminar perm??
+    if (!perm[i]){
+      for (j = 0; j < i; j++) free(perm[j]);
+      free(perm);
+      return NULL;
+    }
   }
 
   return perm;

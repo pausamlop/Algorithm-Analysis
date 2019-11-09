@@ -52,7 +52,7 @@ short average_sorting_time(pfunc_sort method,
   }
   end = clock();
 
-  ptime->time = ((double)(end - start) / (double)CLOCKS_PER_SEC) / (double)n_perms;
+  ptime->time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * 1000 / (double)n_perms;
   ptime->min_ob = min;
   ptime->max_ob = max;
   ptime->average_ob = sum;

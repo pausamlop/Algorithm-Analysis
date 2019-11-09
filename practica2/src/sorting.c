@@ -188,8 +188,9 @@ int median_avg(int *table, int ip, int iu, int *pos){
 /* This function returns the index of the pivot              */
 /*************************************************************/
 int median_stat(int *table, int ip, int iu, int *pos){
-  if (!table || iu < ip || ip < 0 || !pos) return ERR;
   int a, b, c;
+  if (!table || iu < ip || ip < 0 || !pos) return ERR;
+
   a = table[ip];
   b = table[iu];
   c = table[(ip+ iu)/2];
@@ -224,7 +225,7 @@ int split (int* table, int ip, int iu, int *pos){
 
   if (!table || iu < ip || !pos || ip < 0) return ERR;
 
-  pivot = median(table, ip, iu, pos);
+  pivot = median_stat(table, ip, iu, pos);
   if (pivot == ERR) return ERR;
 
   k = table[*pos];
@@ -251,20 +252,21 @@ int split (int* table, int ip, int iu, int *pos){
 /* This function sortes an integer array in ascending order  */
 /*************************************************************/
 int QuickSort(int *table, int ip, int iu){
-  int count, pos;
+  int count, pos, res = 0;
   if (!table || iu < ip || ip < 0) return ERR;
   if (iu == ip) return OK;
 
   count = split(table, ip, iu, &pos);
+  if (count == ERR)return ERR;
   if (ip < pos-1)
-    QuickSort(table, ip, pos-1);
+    res = QuickSort(table, ip, pos-1);
+    if (res == ERR) return ERR;
+    count += res;
   if (pos+1 < iu)
-    QuickSort(table, pos+1, iu);
+    res = QuickSort(table, pos+1, iu);
+    if (res == ERR) return ERR;
+    count += res;
 
   return count;
 
 }
-
-
-/* https://stackoverflow.com/questions/42710726/counting-basic-operations-in-quicksort-algorithm
-   https://stackoverflow.com/questions/53025415/counting-swaps-in-quicksort-in-c                  */

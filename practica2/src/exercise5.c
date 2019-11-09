@@ -45,8 +45,8 @@ int main(int argc, char** argv)
   }
 
   printf("Practice number 1, section 5\n");
-  printf("Done by: your names\n");
-  printf("Group: Your group\n");
+  printf("Done by: Paula Samper and Laura de Paz\n");
+  printf("Group: 1251\n");
 
   /* check command line */
   for(i = 1; i < argc ; i++) {
