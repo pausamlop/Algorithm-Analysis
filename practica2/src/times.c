@@ -39,8 +39,9 @@ short average_sorting_time(pfunc_sort method,
 
   start = clock();
   if(!start) {
-    return ERR;
+    for (j=0; j<n_perms; j++) free(perms[j]);
     free(perms);
+    return ERR;
   }
 
   for (i = 0; i < n_perms; i++){
@@ -55,12 +56,10 @@ short average_sorting_time(pfunc_sort method,
     if (res > max) max = res;
     sum += (double)res/(double)n_perms;
   }
-  
+
   end = clock();
   if(!end) {
-    for (j=0; j<n_perms; j++) free(perms[j]);
-    free(perms);
-    return ERR;
+
   }
 
   ptime->time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * 1000 / (double)n_perms;
