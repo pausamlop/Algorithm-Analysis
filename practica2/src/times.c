@@ -38,6 +38,11 @@ short average_sorting_time(pfunc_sort method,
 
 
   start = clock();
+  if(!start) {
+    return ERR;
+    free(perms);
+  }
+
   for (i = 0; i < n_perms; i++){
     res = method(perms[i],0,N-1);
     if (res == ERR){
@@ -50,7 +55,13 @@ short average_sorting_time(pfunc_sort method,
     if (res > max) max = res;
     sum += (double)res/(double)n_perms;
   }
+  
   end = clock();
+  if(!end) {
+    for (j=0; j<n_perms; j++) free(perms[j]);
+    free(perms);
+    return ERR;
+  }
 
   ptime->time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * 1000 / (double)n_perms;
   ptime->min_ob = min;
@@ -117,7 +128,10 @@ short store_time_table(char* file, PTIME time, int n_times)
   if (!f1) return ERR;
 
   for (i = 0; i<n_times; i++){
-    fprintf (f1, "%i %f %f %i %i\n", time[i].N, time[i].time, time[i].average_ob, time[i].max_ob, time[i].min_ob);
+    if(!fprintf (f1, "%i %f %f %i %i\n", time[i].N, time[i].time, time[i].average_ob, time[i].max_ob, time[i].min_ob)){
+      fclose(f1);
+      return ERR;
+    }
   }
 
   fclose(f1);
