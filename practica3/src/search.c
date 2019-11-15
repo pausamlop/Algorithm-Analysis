@@ -87,13 +87,13 @@ void free_dictionary(PDICT pdict)
 
 int insert_dictionary(PDICT pdict, int key)
 {
-  int a, j;
+  int a, j; //counter = 0
 	if (!pdict || pdict->n_data == pdict->size) return ERR; //check key??
 
-  if (pdict->order == 0){
+  if (pdict->order == 0){ //counter ++
     pdict->table[pdict->n_data] =  key;
     pdict->n_data ++;
-    return OK;
+    return OK;//return counter
   }
 
   pdict->table[pdict->n_data] =  key;
@@ -102,25 +102,25 @@ int insert_dictionary(PDICT pdict, int key)
   a = pdict->table[pdict->n_data - 1];
   j = pdict->n_data - 2;
 
-  while (j >= 0 && pdict->table[j]>a){
+  while (j >= 0 && pdict->table[j]>a){ //counter ++, e igual hay que hacer un if como en insert
     pdict->table[j+1] = pdict->table[j];
     j--;
   }
   pdict->table[j+1] = a;
-  return OK;
+  return OK; //return counter
 }
 
 int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys)
 {
-  int i, res;
+  int i, res; //counter = 0
 	if (!pdict || !keys || n_keys < 0) return ERR;
 
-  for (i = 0; i < n_keys; i++){
+  for (i = 0; i < n_keys; i++){ //counter ++
     res = insert_dictionary(pdict, keys[i]);
     if (res == ERR) return ERR; /* ???*/
   }
 
-  return OK;
+  return OK;  //return counter
 }
 
 int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method)
@@ -133,7 +133,7 @@ int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method)
 
   index = *ppos;
 
-  return index;
+  return index; //res is the number of basic operations, we return it
 }
 
 
@@ -147,11 +147,11 @@ int bin_search(int *table,int F,int L,int key, int *ppos)
     m = (F+L) / 2;
 
     if (table[m] == key){
-      //counter ++
+      counter ++;
       *ppos = m;
       return counter;
     } else if (key < table[m]){
-      //counter ++
+      counter ++;
       L = m + 1;
     }
   }
@@ -188,16 +188,17 @@ static void swap (int *x, int *y) {
 
 int lin_auto_search(int *table,int F,int L,int key, int *ppos)
 {
-  int i;
+  int i, counter = 0;
 	if (!table || F > L || F < 0 || !ppos) return ERR;
 
   for (i = F; i <= L; i++){
+    counter++;
     if (table[i] == key){
       if (i != F) swap(&table[i], &table[i-1]);
       *ppos = i;
       return OK;
     }
   }
-
-  return NOT_FOUND;
+  *ppos = NOT_FOUND;
+  return counter;
 }
