@@ -231,7 +231,7 @@ int split (int* table, int ip, int iu, int *pos){
 
   if (!table || iu < ip || !pos || ip < 0) return ERR;
 
-  pivot= median(table, ip, iu, pos);
+  pivot = median(table, ip, iu, pos);
   if (pivot == ERR) return ERR;
 
   k = table[*pos];
