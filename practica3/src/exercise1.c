@@ -39,8 +39,8 @@ int main(int argc, char** argv)
   }
 
   printf("Pratice number 3, section 1\n");
-  printf("Done by: Your names\n");
-  printf("Group: Your group\n");
+  printf("Done by: Laura de Paz and Paula Samper\n");
+  printf("Group: 1251\n");
 
   /* comprueba la linea de comandos */
   for(i = 1; i < argc; i++) {
@@ -53,7 +53,9 @@ int main(int argc, char** argv)
     }
   }
 
-  pdict = init_dictionary(size,NOT_SORTED);
+  // pdict = init_dictionary(size,NOT_SORTED);
+  pdict = init_dictionary(size,SORTED);
+
 
   if (pdict == NULL) {
     /* error */
@@ -80,7 +82,15 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  nob = search_dictionary(pdict,key,&pos,lin_search);
+
+  /************** PRINT TABLE ****************/
+  for (int k = 0; k < pdict->n_data; k++){
+    printf("%d ", pdict->table[k]);
+  }
+  printf("\n");
+  /*******************************************/
+
+  nob = search_dictionary(pdict,key,&pos,bin_search);
 
   if(nob >= 0) {
     printf("Key %d found in position %d in %d basic op.\n",key,pos,nob);

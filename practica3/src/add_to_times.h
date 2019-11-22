@@ -1,6 +1,6 @@
 /**
  *
- * Descripcion: Headers for time measurement functions 
+ * Descripcion: Headers for time measurement functions
  *
  * Fichero: times.h
  * Author: Carlos Aguirre / Javier Sanz-Cruzado
@@ -11,17 +11,13 @@
 
 
 
-short generate_search_times(pfunc_search method, pfunc_key_generator generator, 
-                                int order, char* file, 
-                                int num_min, int num_max, 
+short generate_search_times(pfunc_search method, pfunc_key_generator generator,
+                                char order, char* file,
+                                int num_min, int num_max,
                                 int incr, int n_times);
 
 short average_search_time(pfunc_search metodo, pfunc_key_generator generator,
-                              int order,
-                              int N, 
+                              char order,
+                              int N,
                               int n_times,
                               PTIME_AA ptime);
-
-
-
-

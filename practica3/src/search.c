@@ -87,13 +87,14 @@ void free_dictionary(PDICT pdict)
 
 int insert_dictionary(PDICT pdict, int key)
 {
-  int a, j; //counter = 0
-	if (!pdict || pdict->n_data == pdict->size) return ERR; //check key??
+  int a, j, counter = 0;
+	if (!pdict || pdict->n_data == pdict->size) return ERR;
 
-  if (pdict->order == 0){ //counter ++
+  // counter++;   ????
+  if (pdict->order == NOT_SORTED){
     pdict->table[pdict->n_data] =  key;
     pdict->n_data ++;
-    return OK;//return counter
+    return counter;
   }
 
   pdict->table[pdict->n_data] =  key;
@@ -102,38 +103,40 @@ int insert_dictionary(PDICT pdict, int key)
   a = pdict->table[pdict->n_data - 1];
   j = pdict->n_data - 2;
 
-  while (j >= 0 && pdict->table[j]>a){ //counter ++, e igual hay que hacer un if como en insert
+  while (j >= 0 && pdict->table[j]>a){
+    counter ++;
     pdict->table[j+1] = pdict->table[j];
     j--;
   }
+  if(j >= 0) counter++;
+
   pdict->table[j+1] = a;
-  return OK; //return counter
+  return counter;
 }
 
 int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys)
 {
-  int i, res; //counter = 0
+  int i, res, counter = 0;
 	if (!pdict || !keys || n_keys < 0) return ERR;
 
-  for (i = 0; i < n_keys; i++){ //counter ++
+  for (i = 0; i < n_keys; i++){
+    counter ++;
     res = insert_dictionary(pdict, keys[i]);
-    if (res == ERR) return ERR; /* ???*/
+    if (res == ERR) return ERR;
   }
 
-  return OK;  //return counter
+  return counter;
 }
 
 int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method)
 {
-  int res, index;
+  int res;
 	if (!pdict || key < 0 || !ppos || !method) return ERR;
 
   res = method (pdict->table, 0, pdict->n_data - 1, key, ppos);
   if (res == ERR) return ERR;
 
-  index = *ppos;
-
-  return index; //res is the number of basic operations, we return it
+  return res; //res is the number of basic operations, we return it
 }
 
 
@@ -146,13 +149,16 @@ int bin_search(int *table,int F,int L,int key, int *ppos)
   while (F <= L){
     m = (F+L) / 2;
 
-    if (table[m] == key){
-      counter ++;
+    counter ++;
+    if (table[m] > key){
+      L = m - 1;
+    }
+    else if (table[m] < key){
+      F = m + 1;
+    }
+    else{
       *ppos = m;
       return counter;
-    } else if (key < table[m]){
-      counter ++;
-      L = m + 1;
     }
   }
   *ppos = NOT_FOUND;
@@ -196,7 +202,7 @@ int lin_auto_search(int *table,int F,int L,int key, int *ppos)
     if (table[i] == key){
       if (i != F) swap(&table[i], &table[i-1]);
       *ppos = i;
-      return OK;
+      return counter;
     }
   }
   *ppos = NOT_FOUND;
