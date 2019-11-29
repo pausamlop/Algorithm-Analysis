@@ -21,11 +21,13 @@ short average_search_time(pfunc_search method, pfunc_key_generator generator,
                             char order, int N, int n_times, PTIME ptime){
   clock_t start, end;
   PDICT d = NULL;
-  int *perms = NULL, *keys = NULL, i, res, ppos, min, max;
-  double sum;
-
+  int *perms = NULL, *keys = NULL, i, res, ppos, min = 0, max = 0;
+  double sum = 0;
 
   if (!method || !generator || !ptime || n_times<=0 || order > 1 || order < 0 ) return ERR;
+
+  ptime->N = N;
+  ptime->n_elems = n_times;
 
   d = init_dictionary (N, order);
   if(!d)return ERR;
@@ -52,12 +54,6 @@ short average_search_time(pfunc_search method, pfunc_key_generator generator,
   generator(keys, n_times, N);
 
   start = clock();
-  if(!start) {
-    free_dictionary(d);
-    free(perms);
-    free(keys);
-    return ERR;
-  }
 
   for (i = 0; i < n_times * N; i++){
     res = method(perms, 0, N-1, keys[i], &ppos);
@@ -70,24 +66,19 @@ short average_search_time(pfunc_search method, pfunc_key_generator generator,
     if (min == 0) min = res;
     else if (res < min) min = res;
     if (res > max) max = res;
-    sum += (double)res/(double)n_times;
+    sum += (double)res/(double)(N*n_times);
   }
 
   end = clock();
-  if(!end) {
-    //falta definir min, max
-    if (min == 0) min = res;
-    else if (res < min) min = res;
-    if (res > max) max = res;
-    sum += (double)res/(double)n_times;
 
-  }
+  ptime->time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * 1000 / (double)(N*n_times);
+  ptime->min_ob = min;
+  ptime->max_ob = max;
+  ptime->average_ob = sum;
 
-
-
-
-
-
+  free_dictionary(d);
+  free(keys);
+  free(perms);
 
   return OK;
 }
@@ -101,7 +92,7 @@ short generate_search_times(pfunc_search method, pfunc_key_generator generator,
                             char order, char* file, int num_min, int num_max,
                             int incr, int n_times){
   int i_max, result, i;
-  PTIME *array_times = NULL;
+  PTIME array_times = NULL;
   if (!method ||  !generator || !file || num_min>num_max || order > 1 || order < 0 || num_min<0 || incr<=0 ||n_times<=0) return ERR;
 
   i_max = (num_max - num_min)/incr + 1;
@@ -110,7 +101,7 @@ short generate_search_times(pfunc_search method, pfunc_key_generator generator,
   if(!array_times) return ERR;
 
   for (i = 0; i < i_max; i++){
-    result = average_search_time(method, generator, order, n_times, num_min + incr*i, &array_times[i]);
+    result = average_search_time(method, generator, order, num_min + incr*i, n_times, &array_times[i]);
     if (result == ERR){
       free(array_times);
       return ERR;
@@ -149,11 +140,6 @@ short average_sorting_time(pfunc_sort method,
 
 
   start = clock();
-  if(!start) {
-    for (j=0; j<n_perms; j++) free(perms[j]);
-    free(perms);
-    return ERR;
-  }
 
   for (i = 0; i < n_perms; i++){
     res = method(perms[i],0,N-1);
@@ -169,9 +155,6 @@ short average_sorting_time(pfunc_sort method,
   }
 
   end = clock();
-  if(!end) {
-
-  }
 
   ptime->time = ((double)(end - start) / (double)CLOCKS_PER_SEC) * 1000 / (double)n_perms;
   ptime->min_ob = min;

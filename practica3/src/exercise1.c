@@ -53,7 +53,6 @@ int main(int argc, char** argv)
     }
   }
 
-  // pdict = init_dictionary(size,NOT_SORTED);
   pdict = init_dictionary(size,SORTED);
 
 
@@ -83,14 +82,14 @@ int main(int argc, char** argv)
   }
 
 
-  /************** PRINT TABLE ****************/
+ /************** PRINT TABLE ***************
   for (int k = 0; k < pdict->n_data; k++){
     printf("%d ", pdict->table[k]);
   }
   printf("\n");
   /*******************************************/
 
-  nob = search_dictionary(pdict,key,&pos,bin_search);
+  nob = search_dictionary(pdict,key,&pos,lin_search);
 
   if(nob >= 0) {
     printf("Key %d found in position %d in %d basic op.\n",key,pos,nob);

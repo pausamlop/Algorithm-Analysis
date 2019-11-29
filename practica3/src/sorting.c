@@ -139,7 +139,7 @@ int MergeSort(int* table, int ip, int iu){
   if (num_bo1 == ERR || num_bo2 == ERR) return ERR;
 
   res = merge(table, ip, iu, m);
-  if (!res) return ERR;
+  if (res == ERR) return ERR;
   return num_bo1 + num_bo2 + res;
 }
 
@@ -188,7 +188,7 @@ int median_avg(int *table, int ip, int iu, int *pos){
 /* This function returns the index of the pivot              */
 /*************************************************************/
 int median_stat(int *table, int ip, int iu, int *pos){
-  int a, b, c, med, m;
+  int a, b, c, med, m, counter = 0;
   if (!table || iu < ip || ip < 0 || !pos) return ERR;
 
   a = table[ip];
@@ -196,20 +196,27 @@ int median_stat(int *table, int ip, int iu, int *pos){
   m = (ip + iu)/2;
   c = table[m];
 
+  counter++;
   if (a>b){
+    counter++;
     if (b>c){
       med = b;
     } else if (a>c) {
+      counter++;
       med = c;
     } else {
+      counter++;
       med = a;
     }
   } else {
+    counter++;
     if (a>c){
       med = a;
     } else if (b>c){
+      counter++;
       med = c;
     } else{
+      counter++;
       med = b;
     }
   }
@@ -218,7 +225,7 @@ int median_stat(int *table, int ip, int iu, int *pos){
   else if (med == b) *(pos) = iu;
   else *(pos) = m;
 
-  return 3;
+  return counter;
 
 }
 

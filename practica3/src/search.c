@@ -90,7 +90,7 @@ int insert_dictionary(PDICT pdict, int key)
   int a, j, counter = 0;
 	if (!pdict || pdict->n_data == pdict->size) return ERR;
 
-  // counter++;   ????
+
   if (pdict->order == NOT_SORTED){
     pdict->table[pdict->n_data] =  key;
     pdict->n_data ++;
@@ -136,7 +136,7 @@ int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method)
   res = method (pdict->table, 0, pdict->n_data - 1, key, ppos);
   if (res == ERR) return ERR;
 
-  return res; //res is the number of basic operations, we return it
+  return res;
 }
 
 

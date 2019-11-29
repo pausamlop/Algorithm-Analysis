@@ -37,7 +37,7 @@ typedef struct time {
 } TIME, *PTIME;
 
 short average_search_time(pfunc_search method, pfunc_key_generator generator, char order, int N, int n_times, PTIME ptime);
-short generate_search_times(pfunc_search method, pfunc_key_generator generator, int order, char* file, int num_min, int num_max, int incr, int n_times);
+short generate_search_times(pfunc_search method, pfunc_key_generator generator, char order, char* file, int num_min, int num_max, int incr, int n_times);
 
 /* Functions */
 short average_sorting_time(pfunc_sort method, int n_perms,int N, PTIME ptime);
