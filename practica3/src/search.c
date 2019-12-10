@@ -93,7 +93,7 @@ int insert_dictionary(PDICT pdict, int key)
 
   if (pdict->order == NOT_SORTED){
     pdict->table[pdict->n_data] =  key;
-    pdict->n_data ++;
+    pdict->n_data   ++;
     return counter;
   }
 
