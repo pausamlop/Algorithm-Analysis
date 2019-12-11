@@ -21,7 +21,7 @@ short average_search_time(pfunc_search method, pfunc_key_generator generator,
                             char order, int N, int n_times, PTIME ptime){
   clock_t start, end;
   PDICT d = NULL;
-  int *perms = NULL, *keys = NULL, i, res, ppos, min = 0, max = 0;
+  int *perms = NULL, *keys = NULL, i, res, pos, min = 0, max = 0;
   double sum = 0;
 
   if (!method || !generator || !ptime || n_times<=0 || order > 1 || order < 0 ) return ERR;
@@ -51,12 +51,12 @@ short average_search_time(pfunc_search method, pfunc_key_generator generator,
     return ERR;
   }
 
-  generator(keys, n_times, N);
+  generator(keys, N*n_times, N);
 
   start = clock();
 
   for (i = 0; i < n_times * N; i++){
-    res = method(perms, 0, N-1, keys[i], &ppos);
+    res = search_dictionary(d, keys[i], &pos, method);
     if (res == ERR){
       free_dictionary(d);
       free(perms);
