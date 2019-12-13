@@ -57,7 +57,7 @@ void potential_key_generator(int *keys, int n_keys, int max)
 }
 
 PDICT init_dictionary (int size, char order){
-	PDICT dic = NULL;
+  PDICT dic = NULL;
   dic = (PDICT)malloc(sizeof(DICT));
   if (!dic) return NULL;
 
@@ -73,9 +73,9 @@ PDICT init_dictionary (int size, char order){
   return dic;
 }
 
-void free_dictionary(PDICT pdict)
-{
-	if (!pdict) return;
+
+void free_dictionary(PDICT pdict){
+  if (!pdict) return;
 
   if (pdict->table != NULL){
     free(pdict->table);
@@ -85,20 +85,22 @@ void free_dictionary(PDICT pdict)
   return;
 }
 
+
 int insert_dictionary(PDICT pdict, int key)
 {
   int a, j, counter = 0;
-	if (!pdict || pdict->n_data == pdict->size) return ERR;
+  if (!pdict) return ERR;
+  if (pdict->n_data == pdict->size) return ERR;
 
 
   if (pdict->order == NOT_SORTED){
     pdict->table[pdict->n_data] =  key;
-    pdict->n_data   ++;
+    pdict->n_data++;
     return counter;
   }
 
   pdict->table[pdict->n_data] =  key;
-  pdict->n_data ++;
+  pdict->n_data++;
 
   a = pdict->table[pdict->n_data - 1];
   j = pdict->n_data - 2;
@@ -114,10 +116,9 @@ int insert_dictionary(PDICT pdict, int key)
   return counter;
 }
 
-int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys)
-{
+int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys){
   int i, res, counter = 0;
-	if (!pdict || !keys || n_keys < 0) return ERR;
+  if (!pdict || !keys || n_keys < 0) return ERR;
 
   for (i = 0; i < n_keys; i++){
     counter ++;
@@ -128,10 +129,9 @@ int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys)
   return counter;
 }
 
-int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method)
-{
+int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
   int res;
-	if (!pdict || key < 0 || !ppos || !method) return ERR;
+  if (!pdict || key < 0 || !ppos || !method) return ERR;
 
   res = method (pdict->table, 0, pdict->n_data - 1, key, ppos);
   if (res == ERR) return ERR;
@@ -141,8 +141,8 @@ int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method)
 
 
 /* Search functions of the Dictionary ADT */
-int bin_search(int *table,int F,int L,int key, int *ppos)
-{
+
+int bin_search(int *table,int F,int L,int key, int *ppos){
   int m, counter = 0;
   if (!table || F > L || F < 0 || !ppos) return ERR;
 
@@ -165,8 +165,7 @@ int bin_search(int *table,int F,int L,int key, int *ppos)
   return counter;
 }
 
-int lin_search(int *table,int F,int L,int key, int *ppos)
-{
+int lin_search(int *table,int F,int L,int key, int *ppos){
   int i, counter = 0;
   if (!table || F > L || F < 0 || !ppos) return ERR;
 
@@ -192,10 +191,9 @@ static void swap (int *x, int *y) {
   *y = aux;
 }
 
-int lin_auto_search(int *table,int F,int L,int key, int *ppos)
-{
+int lin_auto_search(int *table,int F,int L,int key, int *ppos){
   int i, counter = 0;
-	if (!table || F > L || F < 0 || !ppos) return ERR;
+  if (!table || F > L || F < 0 || !ppos) return ERR;
 
   for (i = F; i <= L; i++){
     counter++;
