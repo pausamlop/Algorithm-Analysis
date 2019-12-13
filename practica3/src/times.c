@@ -24,7 +24,7 @@ short average_search_time(pfunc_search method, pfunc_key_generator generator,
   int *perms = NULL, *keys = NULL, i, res, pos, min = 0, max = 0;
   double sum = 0;
 
-  if (!method || !generator || !ptime || n_times<=0 || order > 1 || order < 0 ) return ERR;
+  if (!method || !generator || !ptime || n_times<=0 || N <= 0 || order > 1 || order < 0 ) return ERR;
 
   ptime->N = N;
   ptime->n_elems = n_times;
@@ -198,7 +198,10 @@ short generate_sorting_times(pfunc_sort method, char* file,
     }
   }
 
-  store_time_table(file, array_times, i_max);
+  if(store_time_table(file, array_times, i_max) == ERR){
+    free(array_times);
+    return ERR;
+  }
 
   free (array_times);
   return OK;

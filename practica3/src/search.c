@@ -58,7 +58,10 @@ void potential_key_generator(int *keys, int n_keys, int max)
 
 PDICT init_dictionary (int size, char order){
   PDICT dic = NULL;
-  dic = (PDICT)malloc(sizeof(DICT));
+
+  if (size < 0 || order > 1 || order < 0) return NULL;
+
+  dic = (PDICT)malloc(sizeof(DICT));N
   if (!dic) return NULL;
 
   dic->size = size;
@@ -131,7 +134,7 @@ int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys){
 
 int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
   int res;
-  if (!pdict || key < 0 || !ppos || !method) return ERR;
+  if (!pdict || !ppos || !method) return ERR;
 
   res = method (pdict->table, 0, pdict->n_data - 1, key, ppos);
   if (res == ERR) return ERR;
