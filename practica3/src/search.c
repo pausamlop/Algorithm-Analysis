@@ -61,7 +61,7 @@ PDICT init_dictionary (int size, char order){
 
   if (size < 0 || order > 1 || order < 0) return NULL;
 
-  dic = (PDICT)malloc(sizeof(DICT));N
+  dic = (PDICT)malloc(sizeof(DICT));
   if (!dic) return NULL;
 
   dic->size = size;
@@ -76,7 +76,7 @@ PDICT init_dictionary (int size, char order){
   return dic;
 }
 
-
+src
 void free_dictionary(PDICT pdict){
   if (!pdict) return;
 
