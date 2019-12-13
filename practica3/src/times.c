@@ -108,7 +108,10 @@ short generate_search_times(pfunc_search method, pfunc_key_generator generator,
     }
   }
 
-  store_time_table(file, array_times, i_max);
+  if (store_time_table(file, array_times, i_max) == ERR){
+    free(array_times);
+    return ERR;
+  }
 
   free (array_times);
   return OK;
