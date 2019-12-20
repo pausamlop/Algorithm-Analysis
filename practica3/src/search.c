@@ -76,7 +76,7 @@ PDICT init_dictionary (int size, char order){
   return dic;
 }
 
-src
+
 void free_dictionary(PDICT pdict){
   if (!pdict) return;
 
