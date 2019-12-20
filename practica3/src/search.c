@@ -120,16 +120,15 @@ int insert_dictionary(PDICT pdict, int key)
 }
 
 int massive_insertion_dictionary (PDICT pdict,int *keys, int n_keys){
-  int i, res, counter = 0;
+  int i, res = 0;
   if (!pdict || !keys || n_keys < 0) return ERR;
 
   for (i = 0; i < n_keys; i++){
-    counter ++;
-    res = insert_dictionary(pdict, keys[i]);
+    res += insert_dictionary(pdict, keys[i]);
     if (res == ERR) return ERR;
   }
 
-  return counter;
+  return res;
 }
 
 int search_dictionary(PDICT pdict, int key, int *ppos, pfunc_search method){
