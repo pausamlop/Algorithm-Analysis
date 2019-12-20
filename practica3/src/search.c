@@ -59,7 +59,7 @@ void potential_key_generator(int *keys, int n_keys, int max)
 PDICT init_dictionary (int size, char order){
   PDICT dic = NULL;
 
-  if (size < 0 || order > 1 || order < 0) return NULL;
+  if (size < 0 || (order != SORTED && order != NOT_SORTED)) return NULL;
 
   dic = (PDICT)malloc(sizeof(DICT));
   if (!dic) return NULL;
@@ -202,7 +202,7 @@ int lin_auto_search(int *table,int F,int L,int key, int *ppos){
     counter++;
     if (table[i] == key){
       if (i != F) swap(&table[i], &table[i-1]);
-      *ppos = i;
+      *ppos = i-1;
       return counter;
     }
   }
